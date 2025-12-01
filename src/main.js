@@ -18,6 +18,9 @@ form.addEventListener("submit", async (e) => {
     const input = e.target.elements['search-text'].value.trim();
 
     if(!input) {
+        iziToast.error({
+                message: 'The input field is empty',
+        });
         return;
     }
 
@@ -34,6 +37,7 @@ form.addEventListener("submit", async (e) => {
             iziToast.error({
                 message: 'Sorry, there are no images matching your search query. Please try again!',
             });
+            return;
         }
         createGallery(res.hits);
 
@@ -55,7 +59,7 @@ loadButton.addEventListener("click", async (e) => {
     page += 1;
 
     showLoader();
-    showLoadMoreButton();
+    hideLoadMoreButton();
 
     try {
         const res = await getImagesByQuery(query, page);
